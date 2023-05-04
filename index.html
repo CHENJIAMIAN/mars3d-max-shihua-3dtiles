@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.104/Build/Cesium/Cesium.js"></script>
+    <link
+      href="https://cesium.com/downloads/cesiumjs/releases/1.104/Build/Cesium/Widgets/widgets.css"
+      rel="stylesheet"
+    />
+
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="cesiumContainer" class="fullSize"></div>
+
+    <script>
+      // Get your token from https://cesium.com/ion/tokens
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1Yzg3ZDEzOS0zN2Q1LTQ2N2YtOWJhMy1mNWU4MWY5N2ExYzkiLCJpZCI6MjAxMzIsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1NzY4MTIzNzR9.SfNeHedDyXWLIPiNbc4qSsHBACm7uvaqRsQprL2J4Cw";
+
+      const viewer = new Cesium.Viewer("cesiumContainer", {
+        //shadows: true,
+      });
+      const tileset = new Cesium.Cesium3DTileset({
+        url: "/tileset.json",
+      });
+
+      tileset.readyPromise.then(function (tileset) {
+        viewer.scene.primitives.add(tileset);
+        viewer.zoomTo(
+          tileset,
+          new Cesium.HeadingPitchRange(
+            0.0,
+            -0.5,
+            tileset.boundingSphere.radius * 2.0
+          )
+        );
+      });
+    </script>
+  </body>
+</html>
